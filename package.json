@@ -1,0 +1,16 @@
+{
+  "name": "malcom-monorepo",
+  "version": "1.0.0",
+  "description": "Malcom Marketplace Monorepo",
+  "private": true,
+  "workspaces": [
+    "api",
+    "admin",
+    "mobile"
+  ],
+  "scripts": {
+    "api:dev": "npm run dev -w api",
+    "admin:dev": "npm run dev -w admin",
+    "mobile:start": "npm run start -w mobile"
+  }
+}
