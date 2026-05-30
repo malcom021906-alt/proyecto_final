@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Camera, LogOut, Package, Calendar } from 'lucide-react';
 import { useAuth } from '../../Context/AuthContext';
@@ -15,6 +15,7 @@ export const Profile = () => {
   const [orders, setOrders] = useState([]);
   const [loadingOrders, setLoadingOrders] = useState(true);
   const [avatar, setAvatar] = useState('');
+  const fileInputRef = useRef(null);
 
   useEffect(() => {
     if (!currentUser) {
@@ -22,7 +23,7 @@ export const Profile = () => {
       return;
     }
 
-    setAvatar(currentUser.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=malcom');
+    setAvatar(currentUser.avatarUrl || 'https://api.dicebear.com/7.x/avataaars/svg?seed=proyectostore');
 
     const fetchOrders = async () => {
       try {
@@ -39,24 +40,29 @@ export const Profile = () => {
   }, [currentUser, navigate]);
 
   const handleUpdateAvatar = () => {
-    const confirm = window.confirm("¿Deseas activar la cámara nativa para cambiar tu avatar de perfil?");
-    if (confirm) {
-      const newAvatars = [
-        'https://api.dicebear.com/7.x/bottts/svg?seed=camera1',
-        'https://api.dicebear.com/7.x/avataaars/svg?seed=pixel',
-        'https://api.dicebear.com/7.x/identicon/svg?seed=tech'
-      ];
-      const randomAvatar = newAvatars[Math.floor(Math.random() * newAvatars.length)];
-      setAvatar(randomAvatar);
-      
-      const savedMockUser = localStorage.getItem('malcom_mock_user');
-      if (savedMockUser) {
-        const parsed = JSON.parse(savedMockUser);
-        parsed.avatarUrl = randomAvatar;
-        localStorage.setItem('malcom_mock_user', JSON.stringify(parsed));
-      }
-      
-      alert("¡Foto tomada con éxito mediante el sensor de cámara de tu celular!");
+    if (fileInputRef.current) {
+      fileInputRef.current.click();
+    }
+  };
+
+  const handleFileChange = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        const base64data = reader.result;
+        setAvatar(base64data);
+        
+        const savedMockUser = localStorage.getItem('tecnostore_mock_user');
+        if (savedMockUser) {
+          const parsed = JSON.parse(savedMockUser);
+          parsed.avatarUrl = base64data;
+          localStorage.setItem('tecnostore_mock_user', JSON.stringify(parsed));
+        }
+        
+        alert("¡Foto capturada con éxito utilizando el sensor físico de tu cámara!");
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -87,6 +93,14 @@ export const Profile = () => {
         <div className="p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl flex flex-col items-center gap-4 text-center relative">
           <div className="relative w-[90px] h-[90px] rounded-full border-3 border-indigo-600 p-[3px] shadow-[0_0_15px_rgba(79,70,229,0.4)]">
             <img src={avatar} alt={currentUser.fullName} className="w-full h-full rounded-full object-cover bg-slate-900" />
+            <input 
+              type="file" 
+              accept="image/*" 
+              capture="user" 
+              ref={fileInputRef} 
+              className="hidden" 
+              onChange={handleFileChange} 
+            />
             <button className="absolute bottom-0 right-0 bg-cyan-400 text-slate-900 border-none w-7 h-7 rounded-full flex items-center justify-center cursor-pointer shadow-[0_2px_8px_rgba(6,182,212,0.5)] transition-all duration-200 hover:scale-110" onClick={handleUpdateAvatar} aria-label="Cambiar foto">
               <Camera size={14} />
             </button>

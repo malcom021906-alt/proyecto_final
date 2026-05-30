@@ -28,8 +28,8 @@ export const Login = () => {
   };
 
   const handleSocialLogin = (provider) => {
-    setEmail(provider === 'Google' ? 'cliente@malcomproyecto.com' : 'admin@malcomproyecto.com');
-    setPassword('malcomproyecto2026');
+    setEmail(provider === 'Google' ? 'cliente@proyectostore.com' : 'admin@proyectostore.com');
+    setPassword('proyectostore2026');
   };
 
   return (
@@ -39,7 +39,7 @@ export const Login = () => {
       <div className="w-full max-w-[400px] mx-auto p-8 rounded-3xl border border-white/10 bg-white/5 backdrop-blur-xl shadow-2xl">
         <div className="text-center mb-8 flex flex-col items-center gap-2">
           <Cpu className="text-indigo-500 drop-shadow-[0_0_10px_rgba(79,70,229,0.5)]" size={40} />
-          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">MALCOM</h1>
+          <h1 className="text-3xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-indigo-400 via-purple-400 to-cyan-400">TECNOSTORE</h1>
           <p className="text-slate-400 text-sm">Marketplace de tecnología colombiana</p>
         </div>
 
@@ -51,7 +51,7 @@ export const Login = () => {
               <input 
                 type="email" 
                 className="w-full py-3 pl-12 pr-4 bg-slate-950/60 border border-white/10 rounded-2xl text-white font-medium text-sm transition-all duration-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/25" 
-                placeholder="ejemplo@malcomproyecto.com"
+                placeholder="ejemplo@proyectostore.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required
@@ -110,9 +110,9 @@ export const Login = () => {
 
         <div className="mt-6 p-4 rounded-2xl bg-indigo-600/10 border border-indigo-500/20 text-xs text-slate-300 leading-relaxed shadow-inner">
           💡 <strong>Credenciales Seed:</strong><br />
-          • Admin: <code>admin@malcomproyecto.com</code><br />
-          • Cliente: <code>cliente@malcomproyecto.com</code><br />
-          • Contraseña: <code>malcomproyecto2026</code>
+          • Admin: <code>admin@proyectostore.com</code><br />
+          • Cliente: <code>cliente@proyectostore.com</code><br />
+          • Contraseña: <code>proyectostore2026</code>
         </div>
       </div>
     </div>

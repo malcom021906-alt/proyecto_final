@@ -13,19 +13,18 @@ const AuthContext = createContext();
 
 export const useAuth = () => useContext(AuthContext);
 
-// Usuarios de semilla locales por si Firebase no está inicializado/conectado
 const SEED_USERS = {
-  'admin@malcomproyecto.com': {
+  'admin@proyectostore.com': {
     uid: 'admin-seed-id',
-    email: 'admin@malcomproyecto.com',
-    fullName: 'Administrador Malcom',
+    email: 'admin@proyectostore.com',
+    fullName: 'Administrador TecnoStore',
     role: 'ADMIN',
     avatarUrl: 'https://api.dicebear.com/7.x/bottts/svg?seed=admin'
   },
-  'cliente@malcomproyecto.com': {
+  'cliente@proyectostore.com': {
     uid: 'client-seed-id',
-    email: 'cliente@malcomproyecto.com',
-    fullName: 'Malcom Cliente Demo',
+    email: 'cliente@proyectostore.com',
+    fullName: 'Cliente Demo TecnoStore',
     role: 'CLIENT',
     avatarUrl: 'https://api.dicebear.com/7.x/avataaars/svg?seed=cliente'
   }
@@ -37,10 +36,9 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [isMockAuth, setIsMockAuth] = useState(false);
 
-  // Inicializar estado de auth
+  // Inicializar estado de auth con validación de token activa
   useEffect(() => {
-    // Primero revisamos si hay una sesión mock en localStorage
-    const savedMockUser = localStorage.getItem('malcom_mock_user');
+    const savedMockUser = localStorage.getItem('tecnostore_mock_user');
     if (savedMockUser) {
       const parsed = JSON.parse(savedMockUser);
       setCurrentUser(parsed);
@@ -53,8 +51,31 @@ export const AuthProvider = ({ children }) => {
     try {
       const unsubscribe = onAuthStateChanged(auth, async (user) => {
         if (user) {
-          // Obtener rol desde Firestore en tabla separada por seguridad
           try {
+            // Obtener y verificar el token físico real de Firebase
+            const tokenResult = await user.getIdTokenResult(true);
+            const expirationTime = new Date(tokenResult.expirationTime).getTime();
+
+            // Si el token ya expiró
+            if (Date.now() >= expirationTime) {
+              console.warn("Sesión expirada detectada.");
+              await signOut(auth);
+              setCurrentUser(null);
+              setUserRole(null);
+              window.location.href = '/login';
+              return;
+            }
+
+            // Programar temporizador de cierre si expira en primer plano
+            const timeLeft = expirationTime - Date.now();
+            const sessionTimeout = setTimeout(async () => {
+              console.warn("Sesión expirada en tiempo real. Redirigiendo a Login...");
+              await signOut(auth);
+              setCurrentUser(null);
+              setUserRole(null);
+              window.location.href = '/login';
+            }, timeLeft);
+
             const roleDoc = await getDoc(doc(db, 'roles', user.uid));
             if (roleDoc.exists()) {
               setUserRole(roleDoc.data().role);
@@ -67,7 +88,6 @@ export const AuthProvider = ({ children }) => {
                 role: roleDoc.data().role
               });
             } else {
-              // Rol por defecto si no existe
               setUserRole('CLIENT');
               setCurrentUser({
                 uid: user.uid,
@@ -75,8 +95,10 @@ export const AuthProvider = ({ children }) => {
                 role: 'CLIENT'
               });
             }
+
+            return () => clearTimeout(sessionTimeout);
           } catch (e) {
-            console.warn("Error leyendo Firestore, usando perfil local básico:", e);
+            console.warn("Error validando token o leyendo Firestore, usando perfil básico:", e);
             setUserRole('CLIENT');
             setCurrentUser({
               uid: user.uid,
@@ -138,7 +160,7 @@ export const AuthProvider = ({ children }) => {
         avatarUrl: getAvatarFallback(fullName),
         role: 'CLIENT'
       };
-      localStorage.setItem('malcom_mock_user', JSON.stringify(newMockUser));
+      localStorage.setItem('tecnostore_mock_user', JSON.stringify(newMockUser));
       setCurrentUser(newMockUser);
       setUserRole('CLIENT');
       setIsMockAuth(true);
@@ -151,9 +173,9 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password) => {
     setLoading(true);
     // Verificar si es uno de los usuarios seed locales predefinidos
-    if (password === 'malcomproyecto2026' && SEED_USERS[email]) {
+    if (password === 'proyectostore2026' && SEED_USERS[email]) {
       const seedUser = SEED_USERS[email];
-      localStorage.setItem('malcom_mock_user', JSON.stringify(seedUser));
+      localStorage.setItem('tecnostore_mock_user', JSON.stringify(seedUser));
       setCurrentUser(seedUser);
       setUserRole(seedUser.role);
       setIsMockAuth(true);
@@ -185,9 +207,9 @@ export const AuthProvider = ({ children }) => {
     } catch (error) {
       console.warn("Falló inicio real Firebase. Probando credenciales de respaldo:", error.message);
       // Buscar en localStorage o mock predeterminado
-      if (SEED_USERS[email] && password === 'malcomproyecto2026') {
+      if (SEED_USERS[email] && password === 'proyectostore2026') {
         const seedUser = SEED_USERS[email];
-        localStorage.setItem('malcom_mock_user', JSON.stringify(seedUser));
+        localStorage.setItem('tecnostore_mock_user', JSON.stringify(seedUser));
         setCurrentUser(seedUser);
         setUserRole(seedUser.role);
         setIsMockAuth(true);
@@ -204,13 +226,13 @@ export const AuthProvider = ({ children }) => {
     setLoading(true);
     try {
       if (isMockAuth) {
-        localStorage.removeItem('malcom_mock_user');
+        localStorage.removeItem('tecnostore_mock_user');
       } else {
         await signOut(auth);
       }
     } catch (e) {
       console.warn("Error en signOut real, limpiando sesión local:", e);
-      localStorage.removeItem('malcom_mock_user');
+      localStorage.removeItem('tecnostore_mock_user');
     } finally {
       setCurrentUser(null);
       setUserRole(null);

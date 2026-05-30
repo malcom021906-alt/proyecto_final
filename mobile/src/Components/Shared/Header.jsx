@@ -14,7 +14,7 @@ export const Header = () => {
       <Link to="/home" className="flex items-center gap-2 text-white no-underline">
         <Cpu className="text-indigo-600 drop-shadow-[0_0_8px_rgba(79,70,229,0.6)]" size={28} />
         <div className="flex flex-col leading-tight">
-          <span className="text-xl font-extrabold tracking-tight">MALCOM</span>
+          <span className="text-xl font-extrabold tracking-tight">TECNOSTORE</span>
           <span className="text-[10px] text-cyan-400 font-bold tracking-widest uppercase -mt-1">Tech</span>
         </div>
       </Link>

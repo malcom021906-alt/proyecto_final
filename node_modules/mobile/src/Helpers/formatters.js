@@ -1,5 +1,5 @@
 /**
- * Helpers y utilidades del proyecto Malcom
+ * Helpers y utilidades del proyecto
  */
 
 // Formatear precio a Pesos Colombianos (COP) sin decimales innecesarios
@@ -24,6 +24,6 @@ export const isValidEmail = (email) => {
 
 // Generar avatar por defecto basado en nombre
 export const getAvatarFallback = (name) => {
-  if (!name) return 'https://api.dicebear.com/7.x/bottts/svg?seed=malcom';
+  if (!name) return 'https://api.dicebear.com/7.x/bottts/svg?seed=proyectostore';
   return `https://api.dicebear.com/7.x/initials/svg?seed=${encodeURIComponent(name)}&backgroundColor=4f46e5`;
 };

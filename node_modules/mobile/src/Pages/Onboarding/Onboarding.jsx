@@ -33,7 +33,7 @@ export const Onboarding = () => {
   };
 
   const finishOnboarding = () => {
-    localStorage.setItem('malcom_onboarded', 'true');
+    localStorage.setItem('tecnostore_onboarded', 'true');
     navigate('/login');
   };
 

@@ -138,8 +138,8 @@ export const useFirebaseData = () => {
         console.warn("Fallo lectura Firestore. Inicializando datos en Memoria Local:", err.message);
         
         // Cargar desde LocalStorage para soportar modo Offline/Sin credenciales
-        const localCats = localStorage.getItem('malcom_categories');
-        const localProds = localStorage.getItem('malcom_products');
+        const localCats = localStorage.getItem('tecnostore_categories');
+        const localProds = localStorage.getItem('tecnostore_products');
         
         if (localCats && localProds) {
           setCategories(JSON.parse(localCats));
@@ -147,8 +147,8 @@ export const useFirebaseData = () => {
         } else {
           setCategories(SEED_CATEGORIES);
           setProducts(SEED_PRODUCTS);
-          localStorage.setItem('malcom_categories', JSON.stringify(SEED_CATEGORIES));
-          localStorage.setItem('malcom_products', JSON.stringify(SEED_PRODUCTS));
+          localStorage.setItem('tecnostore_categories', JSON.stringify(SEED_CATEGORIES));
+          localStorage.setItem('tecnostore_products', JSON.stringify(SEED_PRODUCTS));
         }
       } finally {
         setLoading(false);
@@ -172,7 +172,7 @@ export const useFirebaseData = () => {
       return list.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     } catch (e) {
       // Devolver órdenes desde LocalStorage si Firestore no está
-      const localOrders = localStorage.getItem('malcom_orders') || '[]';
+      const localOrders = localStorage.getItem('tecnostore_orders') || '[]';
       const parsed = JSON.parse(localOrders);
       return parsed
         .filter(o => o.userId === userId)
@@ -208,7 +208,7 @@ export const useFirebaseData = () => {
       console.warn("Fallo guardado en Firestore. Guardando orden localmente:", e.message);
       
       // Guardar localmente
-      const localOrders = JSON.parse(localStorage.getItem('malcom_orders') || '[]');
+      const localOrders = JSON.parse(localStorage.getItem('tecnostore_orders') || '[]');
       const orderId = 'order-' + Math.random().toString(36).substr(2, 9);
       const newOrder = {
         id: orderId,
@@ -217,10 +217,10 @@ export const useFirebaseData = () => {
       };
       
       localOrders.push(newOrder);
-      localStorage.setItem('malcom_orders', JSON.stringify(localOrders));
+      localStorage.setItem('tecnostore_orders', JSON.stringify(localOrders));
 
       // Actualizar stock localmente
-      const localProducts = JSON.parse(localStorage.getItem('malcom_products') || JSON.stringify(SEED_PRODUCTS));
+      const localProducts = JSON.parse(localStorage.getItem('tecnostore_products') || JSON.stringify(SEED_PRODUCTS));
       const updatedProducts = localProducts.map(p => {
         const boughtItem = orderData.items.find(i => i.productId === p.id);
         if (boughtItem) {
@@ -229,7 +229,7 @@ export const useFirebaseData = () => {
         return p;
       });
       
-      localStorage.setItem('malcom_products', JSON.stringify(updatedProducts));
+      localStorage.setItem('tecnostore_products', JSON.stringify(updatedProducts));
       setProducts(updatedProducts);
 
       return { success: true, orderId };
@@ -248,7 +248,7 @@ export const useFirebaseData = () => {
       return true;
     } catch (e) {
       console.warn("Fallo guardar producto en Firestore. Guardando en memoria local.");
-      const localProducts = JSON.parse(localStorage.getItem('malcom_products') || JSON.stringify(SEED_PRODUCTS));
+      const localProducts = JSON.parse(localStorage.getItem('tecnostore_products') || JSON.stringify(SEED_PRODUCTS));
       const exists = localProducts.some(p => p.id === product.id);
       let updated;
       if (exists) {
@@ -256,7 +256,7 @@ export const useFirebaseData = () => {
       } else {
         updated = [...localProducts, product];
       }
-      localStorage.setItem('malcom_products', JSON.stringify(updated));
+      localStorage.setItem('tecnostore_products', JSON.stringify(updated));
       setProducts(updated);
       return true;
     }

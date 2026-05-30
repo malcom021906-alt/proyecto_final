@@ -40,7 +40,7 @@ export const useChat = (chatId) => {
   }, [chatId]);
 
   const loadLocalChat = () => {
-    const localMsgs = JSON.parse(localStorage.getItem(`malcom_chat_${chatId}`) || '[]');
+    const localMsgs = JSON.parse(localStorage.getItem(`tecnostore_chat_${chatId}`) || '[]');
     setMessages(localMsgs);
     setLoading(false);
   };
@@ -60,10 +60,10 @@ export const useChat = (chatId) => {
     } catch (e) {
       console.warn("Enviando mensaje local debido a modo offline.");
       const key = 'msg-' + Math.random().toString(36).substr(2, 9);
-      const localMsgs = JSON.parse(localStorage.getItem(`malcom_chat_${chatId}`) || '[]');
+      const localMsgs = JSON.parse(localStorage.getItem(`tecnostore_chat_${chatId}`) || '[]');
       const newMsg = { id: key, ...messageData };
       localMsgs.push(newMsg);
-      localStorage.setItem(`malcom_chat_${chatId}`, JSON.stringify(localMsgs));
+      localStorage.setItem(`tecnostore_chat_${chatId}`, JSON.stringify(localMsgs));
       setMessages(localMsgs);
 
       // Simular respuesta del vendedor en 2 segundos si el remitente es el cliente
@@ -75,9 +75,9 @@ export const useChat = (chatId) => {
             content: '¡Hola! Claro que sí, el producto está disponible con envío inmediato y garantía de 12 meses. ¿Tienes alguna otra duda?',
             timestamp: Date.now()
           };
-          const currentMsgs = JSON.parse(localStorage.getItem(`malcom_chat_${chatId}`) || '[]');
+          const currentMsgs = JSON.parse(localStorage.getItem(`tecnostore_chat_${chatId}`) || '[]');
           currentMsgs.push(responseMsg);
-          localStorage.setItem(`malcom_chat_${chatId}`, JSON.stringify(currentMsgs));
+          localStorage.setItem(`tecnostore_chat_${chatId}`, JSON.stringify(currentMsgs));
           setMessages(currentMsgs);
         }, 1500);
       }

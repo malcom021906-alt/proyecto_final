@@ -2,6 +2,7 @@ import React from 'react';
 import { Star, Plus } from 'lucide-react';
 import { formatCOP } from '../../Helpers/formatters';
 import { useCart } from '../../Context/CartContext';
+import styles from './CardItem.module.scss';
 
 export const CardItem = ({ product, onClick }) => {
   const { addToCart } = useCart();
@@ -13,14 +14,13 @@ export const CardItem = ({ product, onClick }) => {
 
   return (
     <div
-      className="flex flex-col bg-[#16213e]/60 backdrop-blur-md border border-white/8 rounded-2xl overflow-hidden
-                 transition-all duration-300 cursor-pointer hover:-translate-y-1 hover:border-indigo-500/40 hover:shadow-lg hover:shadow-indigo-500/20"
+      className={styles.cardContainer}
       onClick={onClick}
     >
       {/* Imagen */}
       <div className="relative w-full aspect-square overflow-hidden bg-black/10">
         {product.stock <= 3 && (
-          <span className="absolute top-2 left-2 z-10 bg-cyan-400/90 text-slate-900 text-xs font-bold px-2 py-0.5 rounded-lg">
+          <span className={styles.badge}>
             {product.stock === 0 ? 'Agotado' : 'Últimas unidades'}
           </span>
         )}

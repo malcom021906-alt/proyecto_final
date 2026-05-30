@@ -1,3 +1,5 @@
 /documentacion.md
 /implementation_plan.md
 /infra
+node_modules
+.env

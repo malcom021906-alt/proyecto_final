@@ -71,7 +71,7 @@ export const Register = () => {
               <input 
                 type="email" 
                 className="w-full py-3 pl-12 pr-4 bg-slate-950/60 border border-white/10 rounded-2xl text-white font-medium text-sm transition-all duration-200 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/25" 
-                placeholder="tuemail@malcomproyecto.com"
+                placeholder="tuemail@proyectostore.com"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 required

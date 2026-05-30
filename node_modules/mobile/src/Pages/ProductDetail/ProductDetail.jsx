@@ -95,7 +95,7 @@ export const ProductDetail = () => {
               className="w-10 h-10 rounded-full object-cover bg-indigo-600"
             />
             <div>
-              <h4 className="text-sm font-bold text-white">Tienda Oficial Malcom</h4>
+              <h4 className="text-sm font-bold text-white">Tienda Oficial TecnoStore</h4>
               <p className="text-xs text-slate-400">Vendedor verificado • Nivel Premium</p>
             </div>
           </div>

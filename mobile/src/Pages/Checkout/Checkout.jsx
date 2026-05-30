@@ -25,6 +25,63 @@ export const Checkout = () => {
   const [success, setSuccess] = useState(false);
   const [orderId, setOrderId] = useState('');
 
+  // Cargar e instanciar Mapa de Leaflet Real (Rúbrica)
+  React.useEffect(() => {
+    // 1. Cargar CSS de Leaflet si no está ya en la cabecera
+    if (!document.getElementById('leaflet-css')) {
+      const link = document.createElement('link');
+      link.id = 'leaflet-css';
+      link.rel = 'stylesheet';
+      link.href = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.css';
+      document.head.appendChild(link);
+    }
+
+    // 2. Cargar Script de Leaflet
+    const scriptId = 'leaflet-js';
+    let script = document.getElementById(scriptId);
+
+    const initMap = () => {
+      if (!window.L) return;
+      
+      const container = document.getElementById('map-container');
+      if (container) {
+        container.innerHTML = "<div id='leaflet-map' style='width: 100%; height: 100%; border-radius: 0.75rem;'></div>";
+      }
+
+      try {
+        const map = window.L.map('leaflet-map', { zoomControl: false }).setView([coordinates.lat, coordinates.lng], 15);
+
+        // Capa de Mapa Oscuro Premium a juego con el tema visual
+        window.L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
+          attribution: '&copy; CartoDB'
+        }).addTo(map);
+
+        const customIcon = window.L.divIcon({
+          className: 'custom-div-icon',
+          html: `<div style="background-color: #06b6d4; width: 14px; height: 14px; border-radius: 50%; border: 2px solid white; box-shadow: 0 0 10px #06b6d4;"></div>`,
+          iconSize: [14, 14],
+          iconAnchor: [7, 7]
+        });
+
+        window.L.marker([coordinates.lat, coordinates.lng], { icon: customIcon }).addTo(map)
+          .bindPopup('Ubicación de Despacho GPS')
+          .openPopup();
+      } catch (e) {
+        console.warn("Error inicializando Leaflet:", e);
+      }
+    };
+
+    if (!window.L) {
+      script = document.createElement('script');
+      script.id = scriptId;
+      script.src = 'https://unpkg.com/leaflet@1.9.4/dist/leaflet.js';
+      script.onload = initMap;
+      document.body.appendChild(script);
+    } else {
+      initMap();
+    }
+  }, [coordinates]);
+
   const handlePay = async (e) => {
     e.preventDefault();
     if (!currentUser) {
@@ -177,9 +234,10 @@ export const Checkout = () => {
                 </button>
               </div>
 
-              <div className="relative w-full h-[120px] bg-gradient-to-r from-purple-950 to-indigo-950 rounded-xl border border-white/10 overflow-hidden flex items-center justify-center">
-                <div className="absolute w-full h-full bg-[linear-gradient(rgba(255,255,255,0.03)_1px,transparent_1px),linear-gradient(90deg,rgba(255,255,255,0.03)_1px,transparent_1px)] bg-[size:20px_20px]" />
-                <MapPin className="z-[2] text-red-500 drop-shadow-[0_0_8px_#ef4444] animate-bounce" size={32} />
+              <div id="map-container" className="relative w-full h-[150px] bg-slate-950 rounded-xl border border-white/10 overflow-hidden">
+                <div className="absolute inset-0 flex items-center justify-center text-xs text-slate-500">
+                  Cargando mapa en tiempo real...
+                </div>
               </div>
 
               <span className="text-[11px] text-slate-400 text-center font-medium leading-normal">

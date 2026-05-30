@@ -1,0 +1,32 @@
+.shakeBanner {
+  background: linear-gradient(135deg, #4f46e5 0%, #06b6d4 100%);
+  padding: 1.25rem 1.5rem;
+  border-radius: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  box-shadow: 0 10px 25px rgba(79, 70, 229, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  animation: float 3s ease-in-out infinite;
+}
+
+.shakeLabel {
+  background-color: rgba(255, 255, 255, 0.2);
+  border-radius: 9999px;
+  padding: 0.25rem 0.75rem;
+  font-size: 0.7rem;
+  font-weight: 800;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #ffffff;
+  align-self: flex-start;
+}
+
+@keyframes float {
+  0%, 100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-5px);
+  }
+}

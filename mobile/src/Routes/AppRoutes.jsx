@@ -2,7 +2,6 @@ import React from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useAuth } from '../Context/AuthContext';
 
-// Importar todas las páginas
 import Onboarding from '../Pages/Onboarding/Onboarding';
 import Login from '../Pages/Login/Login';
 import Register from '../Pages/Register/Register';
@@ -14,15 +13,15 @@ import Checkout from '../Pages/Checkout/Checkout';
 import Profile from '../Pages/Profile/Profile';
 import Dashboard from '../Pages/Admin/Dashboard';
 
+import UserRoutes from './UserRoutes';
+import AdminRoutes from './AdminRoutes';
+
 export const AppRoutes = () => {
   const { currentUser, userRole } = useAuth();
-
-  // Determinar si ya completó el onboarding
-  const isOnboarded = localStorage.getItem('malcom_onboarded') === 'true';
+  const isOnboarded = localStorage.getItem('tecnostore_onboarded') === 'true';
 
   return (
     <Routes>
-      {/* Flujo de Onboarding */}
       <Route 
         path="/" 
         element={
@@ -34,7 +33,6 @@ export const AppRoutes = () => {
         } 
       />
 
-      {/* Autenticación */}
       <Route 
         path="/login" 
         element={currentUser ? <Navigate to="/home" replace /> : <Login />} 
@@ -44,33 +42,20 @@ export const AppRoutes = () => {
         element={currentUser ? <Navigate to="/home" replace /> : <Register />} 
       />
 
-      {/* Rutas Compartidas (Públicas o Semipúblicas) */}
       <Route path="/home" element={<Home />} />
       <Route path="/search" element={<Search />} />
       <Route path="/product/:id" element={<ProductDetail />} />
       <Route path="/cart" element={<Cart />} />
 
-      {/* Rutas de Usuario Protegidas (Criterio de Rúbrica: UserRoutes) */}
-      <Route 
-        path="/checkout" 
-        element={currentUser ? <Checkout /> : <Navigate to="/login" replace />} 
-      />
-      <Route 
-        path="/profile" 
-        element={currentUser ? <Profile /> : <Navigate to="/login" replace />} 
-      />
+      <Route element={<UserRoutes currentUser={currentUser} />}>
+        <Route path="/checkout" element={<Checkout />} />
+        <Route path="/profile" element={<Profile />} />
+      </Route>
 
-      {/* Rutas de Administrador Protegidas (Criterio de Rúbrica: AdminRoutes) */}
-      <Route 
-        path="/admin" 
-        element={
-          currentUser && userRole === 'ADMIN' 
-            ? <Dashboard /> 
-            : <Navigate to="/home" replace />
-        } 
-      />
+      <Route element={<AdminRoutes currentUser={currentUser} userRole={userRole} />}>
+        <Route path="/admin" element={<Dashboard />} />
+      </Route>
 
-      {/* Fallback */}
       <Route path="*" element={<Navigate to="/home" replace />} />
     </Routes>
   );
