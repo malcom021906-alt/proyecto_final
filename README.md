@@ -7,7 +7,7 @@ Este repositorio contiene la versión productiva de **Malcom**, un marketplace m
 ## 👥 Datos del Proyecto
 * **Integrantes del Grupo:**
   1. Malcolm - Desarrollo Frontend Móvil & Integración de Sensores
-  2. Integrante de Proyecto - Arquitectura de Datos & Colaborador Git
+  2. Samuel Salazar - Arquitectura de Datos & Colaborador Git
 * **Enlace al Prototipo Original:** [Prototipo Navigable Malcom (Lovable/Figma)](https://lovable.dev/projects/malcom-proyecto)
 * **Rama Principal:** `main` (todas las ramas de características y desarrollo han sido mezcladas sobre `main`).
 
