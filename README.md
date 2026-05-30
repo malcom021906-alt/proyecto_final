@@ -1,4 +1,4 @@
-# Proyecto Malcom - Marketplace de Tecnología 🇨🇴
+# Proyecto Final - Marketplace de Tecnología 🇨🇴
 
 Este repositorio contiene la versión productiva de **Malcom**, un marketplace móvil premium para el mercado colombiano de objetos tecnológicos (audio, wearables, computación, periféricos, foto y video). La aplicación móvil está construida en **Ionic React** con persistencia en tiempo real en **Firebase** y sensores de dispositivo, cumpliendo rigurosamente con la rúbrica del curso.
 
