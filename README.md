@@ -8,7 +8,7 @@ Este repositorio contiene la versión productiva de **el proyecto final**, un ma
 * **Integrantes del Grupo:**
   1. Malcolm - Desarrollo Frontend Móvil & Integración de Sensores
   2. Samuel Salazar - Arquitectura de Datos & Colaborador Git
-* **Enlace al Prototipo Original:** [Prototipo Navigable  (Lovable/Figma)](https://lovable.dev/projects/malcom-proyecto)
+* **Enlace al Prototipo Original:** [Prototipo Navigable  (Lovable/Figma)](https://proyectomobile.lovable.app)
 * **Rama Principal:** `main` (todas las ramas de características y desarrollo han sido mezcladas sobre `main`).
 
 ---
@@ -91,12 +91,12 @@ El sistema carga automáticamente los siguientes perfiles de usuario y productos
 
 ### 1. Usuarios:
 * **Administrador:**
-  * Correo: `admin@malcomproyecto.com`
-  * Contraseña: `malcomproyecto2026`
+  * Correo: `admin@proyectostore.com`
+  * Contraseña: `proyectostore2026`
   * Rol: `ADMIN` *(Habilita el panel de stock y analíticas en la barra de navegación)*
 * **Cliente Demo:**
-  * Correo: `cliente@malcomproyecto.com`
-  * Contraseña: `malcomproyecto2026`
+  * Correo: `cliente@proyectostore.com`
+  * Contraseña: `proyectostore2026`
   * Rol: `CLIENT`
 
 ### 2. Catálogo Tecnológico (6 Productos en COP reales):
