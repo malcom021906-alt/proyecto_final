@@ -1,6 +1,6 @@
 # Proyecto Final - Marketplace de Tecnología 🇨🇴
 
-Este repositorio contiene la versión productiva de **Malcom**, un marketplace móvil premium para el mercado colombiano de objetos tecnológicos (audio, wearables, computación, periféricos, foto y video). La aplicación móvil está construida en **Ionic React** con persistencia en tiempo real en **Firebase** y sensores de dispositivo, cumpliendo rigurosamente con la rúbrica del curso.
+Este repositorio contiene la versión productiva de **el proyecto final**, un marketplace móvil premium para el mercado colombiano de objetos tecnológicos (audio, wearables, computación, periféricos, foto y video). La aplicación móvil está construida en **Ionic React** con persistencia en tiempo real en **Firebase** y sensores de dispositivo, cumpliendo rigurosamente con la rúbrica del curso.
 
 ---
 
@@ -8,7 +8,7 @@ Este repositorio contiene la versión productiva de **Malcom**, un marketplace m
 * **Integrantes del Grupo:**
   1. Malcolm - Desarrollo Frontend Móvil & Integración de Sensores
   2. Samuel Salazar - Arquitectura de Datos & Colaborador Git
-* **Enlace al Prototipo Original:** [Prototipo Navigable Malcom (Lovable/Figma)](https://lovable.dev/projects/malcom-proyecto)
+* **Enlace al Prototipo Original:** [Prototipo Navigable  (Lovable/Figma)](https://lovable.dev/projects/malcom-proyecto)
 * **Rama Principal:** `main` (todas las ramas de características y desarrollo han sido mezcladas sobre `main`).
 
 ---
